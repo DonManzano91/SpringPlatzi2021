@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "compras")
@@ -30,8 +31,17 @@ public class Compra {
     @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
     private Cliente cliente;
 
+    public List<CompraProducto> getProducto() {
+        return producto;
+    }
+
+    public void setProducto(List<CompraProducto> producto) {
+        this.producto = producto;
+    }
+
     @OneToMany(mappedBy = "producto")
-    private CompraProducto producto;
+    private List<CompraProducto> producto;
+
     public Integer getIdCompra() {
         return idCompra;
     }
