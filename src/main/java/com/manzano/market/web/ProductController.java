@@ -4,8 +4,7 @@ import com.manzano.market.dominio.Product;
 import com.manzano.market.dominio.repositorio.ProductRepository;
 import com.manzano.market.dominio.servicio.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,26 +13,30 @@ import java.util.Optional;
 @RequestMapping("/products")
 public class ProductController {
 
-    @Autowired
+    @Autowired(required = true)
     private ProductService productService;
 
+    @GetMapping("/all")
     public List<Product> getAll(){
         return productService.getAll();
     }
 
-    public Optional<Product> getProduct(int productId){
+    @GetMapping("/{id}")
+    public Optional<Product> getProduct(@PathVariable("id") int productId){
         return productService.getProduct(productId);
     }
-
-    public Optional<List<Product>> getByCategory(int categoryId){
+    @GetMapping("/category/{idCategory}")
+    public Optional<List<Product>> getByCategory(@PathVariable("idCategory") int categoryId){
         return productService.getByCategory(categoryId);
     }
 
-    public Product save(Product product){
+    @PostMapping("/save")
+    public Product save(@RequestBody Product product){
         return productService.save(product);
     }
 
-    public boolean delete(int productId){
+    @DeleteMapping("/delete/{idDelete}")
+    public boolean delete(@PathVariable("idDelete") int productId){
         return productService.delete(productId);
     }
 

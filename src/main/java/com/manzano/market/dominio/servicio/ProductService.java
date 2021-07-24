@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class ProductService {
 
-    @Autowired
+    @Autowired(required = true)
     private ProductRepository productRepository;
 
     public List<Product> getAll(){
