@@ -1,9 +1,7 @@
 package com.manzano.market.persistencia.entidad;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,7 +14,7 @@ public class Compra {
     private Integer idCompra;
 
     @Column(name = "id_cliente")
-    private String idCliente;
+    private String idCliente; //aqui puede estar el error
 
     private LocalDateTime fecha;
 
@@ -31,6 +29,9 @@ public class Compra {
     @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
     private Cliente cliente;
 
+    @OneToMany(mappedBy = "compra", cascade = {CascadeType.ALL})
+    private List<CompraProducto> producto;
+
     public List<CompraProducto> getProducto() {
         return producto;
     }
@@ -39,8 +40,6 @@ public class Compra {
         this.producto = producto;
     }
 
-    @OneToMany(mappedBy = "producto")
-    private List<CompraProducto> producto;
 
     public Integer getIdCompra() {
         return idCompra;
@@ -88,5 +87,12 @@ public class Compra {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

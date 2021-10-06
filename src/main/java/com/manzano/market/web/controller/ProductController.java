@@ -1,7 +1,11 @@
-package com.manzano.market.web;
+package com.manzano.market.web.controller;
 
 import com.manzano.market.dominio.Product;
 import com.manzano.market.dominio.servicio.ProductService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +21,20 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/all")
+    @ApiOperation("Obtiene todos los productos")
+    @ApiResponse(code = 200, message = "OK")
     public ResponseEntity<List<Product>> getAll(){
         return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable("id") int productId){
+    @ApiOperation("Obtiene un producto basado en el Id")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ok"),
+            @ApiResponse(code = 404, message = "No encontrado"),
+    })
+    public ResponseEntity<Product> getProduct(@ApiParam(value = "El id del prod}.", required = true, example = "7")
+                                            @PathVariable("id") int productId){
         return productService.getProduct(productId).
                 map(product -> new ResponseEntity<>(product, HttpStatus.OK)).
                 orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));

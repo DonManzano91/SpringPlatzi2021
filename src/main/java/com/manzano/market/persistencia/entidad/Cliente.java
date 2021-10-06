@@ -8,10 +8,10 @@ import java.util.List;
 public class Cliente {
 
     @Id
-    private Integer id;
+    private String id; //aqui estaba el error
     private String nombre;
     private String apellidos;
-    private String celular;
+    private Long celular;
     private String direccion;
 
     @Column(name = "correo_electronico")
@@ -19,12 +19,21 @@ public class Cliente {
 
     @OneToMany(mappedBy = "cliente")
     private List<Compra> compras;
-    public Integer getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public List<Compra> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(List<Compra> compras) {
+        this.compras = compras;
     }
 
     public String getNombre() {
@@ -43,11 +52,11 @@ public class Cliente {
         this.apellidos = apellidos;
     }
 
-    public String getCelular() {
+    public Long getCelular() {
         return celular;
     }
 
-    public void setCelular(String celular) {
+    public void setCelular(Long celular) {
         this.celular = celular;
     }
 
